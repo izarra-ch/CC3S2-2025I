@@ -10,7 +10,7 @@
 
 2. Mostramos la configuración hecha con el comando `git config --list`
 
-    ![alt text](image.png)
+    ![alt text](images/image.png)
 
 3. Creamos un nuevo repositorio en git, de manera local con el comando `git init`, esto se puede realizar de dos maneras:
 
@@ -22,7 +22,7 @@
     git init my-repositorio
     ```
 
-    ![alt text](image-1.png)
+    ![alt text](images/image-1.png)
 
 4. Agregamos nuestor primer archivo al repositorio, podemos realizarlo utilizando un editor de texto o utilizar la consola para ello, en este caso lo realizamos por consola utilizando `nano`.
 
@@ -30,17 +30,38 @@
     nano README.md
     ```
 
-    ![alt text](image-2.png)
+    ![alt text](images/image-2.png)
 
 5. Como README.md es un nuevo archivo para git, utilizamos `git state` para visualizar, como lo reconoce.
 
-    ![alt text](image-3.png)
+    ![alt text](images/image-3.png)
 
 6. Para el archivo aun no esta rastreado por git, utilizamos el comando `git add` para que el archivo este en un estado rastreado para git.
 
-    ![alt text](image-4.png)
+    ![alt text](images/image-4.png)
 
 7. Como el archivo ya esta preparado(staged), necesitamos registrar estos cambios (confirmar cambios), para esto utilizamos el comando `git commit -m "message"`, al ejecutar el comando, los cambios ya estan confirmado, y al utilizar `git status`, ya no tengremos cambios a rastrear, y si queremos her el commit registrado, utilizamos el comando `git log`, esto nos muestra el historial de commits ralizados.
 
-    ![alt text](image-5.png)
+    ![alt text](images/image-5.png)
 
+8. `git log` puede combinarse con opciones donde te permite formatear la salida, aqui algunos ejemplos.
+
+    - `git log -p`: muestra los cambios introducidos en los commit
+
+      ![alt text](images/image-6.png)
+
+    - `git log --graph`: Muestra historial de ramas y merges , para visualizar esto, primero creamos una rama, y en la nueva rama agregamos un nuevo archivo, para luego realizamos el merge.
+
+      ```bash
+      git branch rama1
+      git checkout rama1
+      nano archivo-rama1.txt
+      git status
+      git add archivo-rama1.txt
+      git commit -m "agregando archivo-rama1.txt"
+      ```
+
+      Una vez que tengamos los comits y merges realizados, vemos el resultado del comando `git log --graph`.
+
+      ![alt text](images/image-7.png)
+     
