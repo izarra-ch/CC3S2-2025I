@@ -1,3 +1,7 @@
+## Actividad 4
+
+Explorando Git
+
 ### Git
 
 1. Configuramos git con el comando `git config`
