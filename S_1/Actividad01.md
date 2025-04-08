@@ -81,8 +81,8 @@
 
       La observabilidad combina tres pilares principales:
         - __Monitoreo:__ La recolección de métricas del sistema (uso de CPU, memoria, latencia de respuestas, tasa de errores) permite evaluar el estado de salud de la aplicación.
-        - Logging: Registro centralizado de logs facilita el análisis de eventos, permitiendo a los equipos identificar anomalías y comportamientos inesperados.
-        - Trazabilidad: Capacidad de seguir el recorrido de una petición a través de distintos microservicios o componentes permite detectar cuellos de botella y entender la interacción entre diferentes partes del sistema.
+        - __Logging__: Registro centralizado de logs facilita el análisis de eventos, permitiendo a los equipos identificar anomalías y comportamientos inesperados.
+        - __Trazabilidad__: Capacidad de seguir el recorrido de una petición a través de distintos microservicios o componentes permite detectar cuellos de botella y entender la interacción entre diferentes partes del sistema.
 
     - Experiencia del desarrollador: Cómo mejorar la satisfacción y productividad de los desarrolladores dentro de un equipo DevOps.
 
