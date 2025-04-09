@@ -6,3 +6,8 @@ Actividades del curso:
 - [Actividad02](S_1/Actividad02.md)
 - [Actividad03](S_1/Actividad03.md)
 - [Actividad04](S_2/Actividad04.md)
+- [Actividad05](S_3/Actividad05.md)
+
+Pruebas del curso:
+
+- [Prueba de entrada](S_3/Prueba_Entrada.md)

@@ -4,7 +4,7 @@ La prueba de entrada consiste en un proyecto completo: Juego de Trivia con FastA
 
 Esto se realizara por tareas que se realizaran por día, y estos se ira registrando paso a paso.
 
-- Detalles del proyecto: [aquí](https://github.com/kapumota/DS/blob/main/2025-1/Prueba_entrada_CC3S2.md)
+- Detalles del proyecto: [aquí](Enunciado_Prueba_Entrada.md)
 - Repositorio del proyecto: [aquí](https://github.com/izarra-ch/trivia-app)
 
 ## Seguimiento de tareas:
