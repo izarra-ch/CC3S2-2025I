@@ -28,7 +28,7 @@ Explorando Git
 
     ![alt text](images/image-1.png)
 
-4. Agregamos nuestor primer archivo al repositorio, podemos realizarlo utilizando un editor de texto o utilizar la consola para ello, en este caso lo realizamos por consola utilizando `nano`.
+4. Agregamos nuestro primer archivo al repositorio, podemos realizarlo utilizando un editor de texto o utilizar la consola para ello, en este caso lo realizamos por consola utilizando `nano`.
 
     ```bash
     nano README.md
@@ -44,11 +44,11 @@ Explorando Git
 
     ![alt text](images/image-4.png)
 
-7. Como el archivo ya esta preparado(staged), necesitamos registrar estos cambios (confirmar cambios), para esto utilizamos el comando `git commit -m "message"`, al ejecutar el comando, los cambios ya estan confirmado, y al utilizar `git status`, ya no tengremos cambios a rastrear, y si queremos her el commit registrado, utilizamos el comando `git log`, esto nos muestra el historial de commits ralizados.
+7. Como el archivo ya esta preparado(stage), necesitamos registrar estos cambios (confirmar cambios), para esto utilizamos el comando `git commit -m "message"`, al ejecutar el comando, los cambios ya están confirmado, y al utilizar `git status`, ya no tendremos cambios a rastrear, y si queremos her el commit registrado, utilizamos el comando `git log`, esto nos muestra el historial de commits realizados.
 
     ![alt text](images/image-5.png)
 
-8. `git log` puede combinarse con opciones donde te permite formatear la salida, aqui algunos ejemplos.
+8. `git log` puede combinarse con opciones donde te permite formatear la salida, aquí algunos ejemplos.
 
     - `git log -p`: muestra los cambios introducidos en los commit
 
@@ -65,7 +65,7 @@ Explorando Git
       git commit -m "agregando archivo-rama1.txt"
       ```
 
-      Una vez que tengamos los comits y merges realizados, vemos el resultado del comando `git log --graph`.
+      Una vez que tengamos los comits y el merge realizados, vemos el resultado del comando `git log --graph`.
 
       ![alt text](images/image-7.png)
      
