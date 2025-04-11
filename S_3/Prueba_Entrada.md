@@ -20,12 +20,17 @@ El proyecto consta con una [descripción] detallada de los pasos a seguir, y los
       ├── src/
       │   ├── main.py
       │   ├── db.py
+      │   ├── trivia.py
+      │   └── ...
+      ├── test/
+      │   ├─ test_trivia.py
       │   └── ...
       │
       ├── .gitignore
       ├── Dockerfile          
       ├── docker-compose.yml
       ├── requirements.txt
+      ├── pytest.ini
       └── README.md
       ```
 
@@ -174,8 +179,59 @@ El proyecto consta con una [descripción] detallada de los pasos a seguir, y los
 
     ![](img/prueba3.png)
 
+### day-2
 
+**Pull Request**: [feature/day-2]
 
-[feature/day-1]: https://github.com/izarra-ch/trivia-app/pull/1
+  - Se agrego el archivo **trivia.py**, en la cual se implemento la clase **Question**, el cual representa a la representa a la pregunta del juego, este maneja la pregunta, las opciones y la respuesta a la pregunta.
+
+    ```python
+    from typing import List
+
+    class Question:
+
+      def __init__(self, question: str, options: List[str], correct_answer: str) -> None:
+        self.question = question
+        self.options = options
+        self.correct_answer = correct_answer
+
+      def is_correct(self, answer: str) -> bool:
+        return self.correct_answer == answer
+    ```
+  - Implementación de las pruebas unitarias para la clase Question (*test_trivia.py*), en la cual se realiza dos pruebas, una para cuando respondemos correctamente a la pregunta y otra para una respuesta incorrecta.
+
+    ```python
+    from trivia import Question
+
+    # Verificamos que devuelva true cuando se le pase respuesta correcta
+    def test_question_correct_answer():
+      question = Question("What is 2 + 2?", ["1", "2", "3", "4"], "4")
+      assert question.is_correct("4")
+
+    # Verificamos que devuelva false cuando se le pase respuesta incorrecta
+    def test_question_incorrect_answer():
+      question = Question("What is 2 + 2?", ["1", "2", "3", "4"], "4")
+      assert not question.is_correct("2")
+    ```  
+
+  - Para ejecutar las pruebas unitaria, se requirió instalar la librería `pytest` en nuestro entorno virtual.
+
+    ```bash
+    pip install pytest
+    ```
+
+  - Agregando archivo `pytest.ini` cara configurar la importación de las clases en los test unitarios, se requirió hacer esto, ya que optamos por colocar los script `test_*.py` en una carpeta llamada `test`, por lo cual tuvimos problemas para importar la clase *Question*, con esta configuración, decimos a *pytest* que los módulos a importar lo busque en src.
+
+    ```bash
+    [pytest]
+    pythonpath=src
+    ```
+
+    Ejecución de pruebas unitarias.
+
+    ![](img/question_test.png)
+
 [Descripción]: Enunciado_Prueba_Entrada
 [repositorio]: https://github.com/izarra-ch/trivia-app
+[feature/day-1]: https://github.com/izarra-ch/trivia-app/pull/1
+[feature/day-2]: https://github.com/izarra-ch/trivia-app/pull/2
