@@ -231,7 +231,75 @@ El proyecto consta con una [descripción] detallada de los pasos a seguir, y los
 
     ![](img/question_test.png)
 
+### day-3
+
+**Pull Request**: [feature/day-2]
+
+- Se agrego implementación de la clase **Quiz**, en el archivo *trivia.py*, la cual consta de 5 métodos:
+  
+  - **add_question**: Método para agrega preguntas a la lista del juego.
+
+  - **get_next_question**: Método para obtiene la siguiente pregunta del juego.
+  - **answer_question**: Método para verifica la respuesta del jugador y actualizar los contadores de respuestas correctas e incorrectas.
+  - **show_question_results**: Método pra mostrar resultados del juego.
+  - **start_quiz**: Método para inicia el juego de trivia mostrando las preguntas una a una en consola, solicitando la respuesta del jugador.
+
+- Se agrego pruebas unitarias para clase Quiz, la cual verifica que al responder correctamente, el contador de respuestas correctas se incremente en 1, de la misma manera, el contador de respuesta incorrectas.
+
+  ```python
+  def test_quiz_scoring():
+    quiz = Quiz()
+    question = Question("What is 2 + 2?", ["1", "2", "3", "4"], "4")
+    # Agregamos pregunta al juego
+    quiz.add_question(question)
+    # Evaluamos pregunta respondida correctamente
+    assert quiz.answer_question(question, "4") == True
+    # Verificamos el contador de repuesta correcta
+    assert quiz.correct_answers == 1
+    # Evaluamos pregunta respondida incorrectamente
+    assert quiz.answer_question(question, "1") == False
+    # Verificamos el contador de repuesta incorrecta
+    assert quiz.incorrect_answers == 1
+  ```
+
+  Ejecución del test.
+
+  ![](img/test_quiz.png)
+
+- Se modifico archivo main, en la cual se agrego una prueba de Inicialización del juego con ciertas preguntas y verificar el funcionamiento del juego ``trivia``.
+
+  ```python
+  from trivia import Question, Quiz
+
+  if __name__ == "__main__":
+
+    # Preguntas propuestas
+    question_bank = [
+      Question("¿Cuál es la capital de Francia?", ["Madrid", "Londres", "París", "Berlín"], "París"),
+      Question("¿En qué país se encuentra la Torre Eiffel?", ["Italia", "Francia", "España", "Alemania"], "Francia"),
+      Question("¿Quién escribió 'Cien años de soledad'?", ["Mario Vargas Llosa", "Gabriel García Márquez", "Julio Cortázar", "Pablo Neruda"], "Gabriel García Márquez"),
+      Question("¿Cuál es el resultado de 7 x 8?", ["54", "56", "64", "58"], "56"),
+      Question("¿Cuál es el océano más grande del mundo?", ["Atlántico", "Índico", "Ártico", "Pacífico"], "Pacífico"),
+      Question("¿Cuál es el idioma más hablado en el mundo?", ["Español", "Inglés", "Chino mandarín", "Hindi"], "Inglés"),
+      Question("¿Qué parte del cuerpo bombea la sangre?", ["Pulmones", "Riñón", "Hígado", "Corazón"], 4),
+    ]
+    
+    quiz = Quiz()
+    
+    # Agregamos las preguntas a la lista del juego
+    for question in question_bank:
+      quiz.add_question(question)
+    
+    # Iniciamos el juego
+    quiz.start_quiz()
+  ```
+
+  Captura del juego en marcha, mostrando ingreso de respuesta validas y una con respuesta invalida, en la cual se pide que ingrese una opción correcta, al finalizar el juego muestra el resultado.
+
+  ![](img/trivia_start.png)
+
 [Descripción]: Enunciado_Prueba_Entrada
 [repositorio]: https://github.com/izarra-ch/trivia-app
 [feature/day-1]: https://github.com/izarra-ch/trivia-app/pull/1
 [feature/day-2]: https://github.com/izarra-ch/trivia-app/pull/2
+[feature/day-3]: https://github.com/izarra-ch/trivia-app/pull/3
