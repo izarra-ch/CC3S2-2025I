@@ -194,3 +194,253 @@ Mostramos un escenario de ejemplo proporcionado.
 
       En este caso, cherry-pick ayuda copiando solo los cambios de commit en especifico a main, descartando los commit que no se requieran pasar a producción evitando merge innecesarios, pero realizar esto podría traer algunas complicaciones, como por ejemplo, si un cambio de un commit en especifico, depende de un cambio previo, por lo cual generaría conflictos, en el peor de los casos, no genere conflictos pero rompa el código.
 
+### Ejercicios prácticos
+
+1. Simulación de un flujo de trabajo Scrum con git rebase y git merge.
+
+    **Contexto**:
+    Tienes una rama master y una rama feature en la que trabajas. Durante el desarrollo del sprint, se han realizado commits tanto en master como en feature.
+
+    Tu objetivo es integrar los cambios de la rama feature en master manteniendo un historial limpio.
+
+    **Instrucciones**:
+
+    - Crea un repositorio y haz algunos commits en la rama master.
+    - Crea una rama feature, agrega nuevos commits, y luego realiza algunos commits adicionales en master.
+    - Realiza un rebase de feature sobre master.
+    - Finalmente, realiza una fusión fast-forward de feature con master.
+
+    **Comandos utilizados**:
+
+    ```bash
+    # Creamos repositorio y generamos primer commit
+    mkdir scrum-workflow;cd scrum-workflow;git init
+    echo "Commit inicial en master" > masterfile.md
+    git add masterfile.md
+    git commit -m "Commit inicial en master"
+
+    # Generamos nueva rama a partir de master y agregamos nuevo commit
+    git checkout -b feature
+    echo "Nueva característica en feature" > featurefile.md
+    git add featurefile.md
+    git commit -m "Commit en feature"
+
+    # Retornamos a master para agregar nuevo commit con el que no contara la rama feature
+    git checkout master
+    echo "Actualización en master" >> masterfile.md
+    git add masterfile.md
+    git commit -m "Actualización en master"
+
+    # Vemos como queda el historial de commit
+    git log --graph --oneline --all
+
+    # Retornamos a feature para actualizar los commit de la rama base (master)
+    git checkout feature
+    git rebase master
+
+    # Vemos como queda el historial de commit luego de rebase
+    git log --graph --oneline --all
+    
+    # Por ultimo realizamos el merge en master de feature
+    git checkout master
+    git merge feature --ff-only
+
+    # Vemos como queda el historial de commit luego de merge
+    git log --graph --oneline --all
+    ```
+
+    ![](img/image-9.png)
+
+    ![](img/image-10.png)
+
+    **Preguntas**:
+
+    - ¿Qué sucede con el historial de commits después del rebase?
+
+        Como vimos en el historial de commit mostrados con `log`, antes del rebase teníamos una bifurcación de la rama `feature` ya que no contaba el ultimo commit de `master`, luego del rebase, vimos el historial de commit se mostró de forma lineal.
+
+    - ¿En qué situación aplicarías una fusión fast-forward en un proyecto ágil?
+
+        `fast-forward` se aplica en un proyecto donde queremos mantener un historial limpio y lineal sin commits de merge adicionales, para tener un historial mas claro, ademas de utilizar en ramas de corta duración o hotfixes que queremos integrar rápidamente.
+
+2. Cherry-pick para integración selectiva en un pipeline CI/CD
+
+    **Contexto**:
+    Durante el desarrollo de una funcionalidad, te das cuenta de que solo ciertos cambios deben ser integrados en la rama de producción, ya que el resto aún está en desarrollo. Para evitar fusionar toda la rama, decides hacer cherry-pick de los commits que ya están listos para producción.
+
+    **Instrucciones**:
+
+    - Crea un repositorio con una rama master y una rama feature.
+    - Haz varios commits en la rama feature, pero solo selecciona uno o dos commits específicos que consideres listos para producción.
+    - Realiza un cherry-pick de esos commits desde feature a master.
+    - Verifica que los commits cherry-picked aparezcan en master.
+    
+    **Comandos utilizados**:
+
+    ```bash
+    # Creamos repositorio y generamos primer commit
+    mkdir ci-cd-workflow;cd ci-cd-workflow;git init
+    echo "Commit inicial en master" > master.md
+    git add master.md
+    git commit -m "Commit inicial en master"
+
+    # Generamos nueva rama a partir de master y agregamos nuevo commit
+    git checkout -b feature
+    echo "Primera característica" > feature1.md
+    git add feature1.md
+    git commit -m "Agregar primera característica"
+
+    echo "Segunda característica" > feature2.md
+    git add feature2.md
+    git commit -m "Agregar segunda característica"
+
+    # Mostramos historial de commit hasta el momento
+    git log --graph --oneline --all
+
+    # Nos posicionamos en master
+    git checkout master
+
+    # Realizamos cherry-pick (1er) y mostramos historial de commit
+    git cherry-pick 0f4406b
+    git log --graph --oneline --all
+
+    # Realizamos cherry-pick (2do) y mostramos historial de commit
+    git cherry-pick 7134f22
+    git log --graph --oneline --all
+    ```
+
+    ![](img/image-11.png)
+
+    ![](img/image-12.png)
+
+
+    **Preguntas**:
+
+    - ¿Cómo utilizarías cherry-pick en un pipeline de CI/CD para mover solo ciertos cambios listos a producción?
+
+      Un pipeline de CI/CD se dispara cuando ingresa un nuevo cambio en la rama publica (master, main, develop) por lo general, en este sentido, utilizamos cherry-pick para mandar solo cambios de commit listos para producción de una rama de trabajo X, a la rama publica, esto dispara el pipeline de CI/CD, incluso se puede trabajar con script que revisen los commit registrados y reconociendo ciertos atributos, como tag, mensajes de commit, entre otros; implemente todo un flujo automatizado para mandar cambios a producción.
+
+    - ¿Qué ventajas ofrece cherry-pick en un flujo de trabajo de DevOps?
+
+      Las ventajas de cherry-pick son varias, una de las cuales es, flexibilidad en la integración de cambios, ya que permite incorporar o copiar cambios de commits específicos sin fusionar ramas completas, por lo cual es ideal para corregir bugs e implementar parches de manera mas clara.
+      
+### Git, Scrum y Sprints
+
+- **Ejercicio 1**: Crear ramas de funcionalidades (feature branches)
+
+  **Comandos utilizados**:
+
+  ```bash
+  mkdir scrum-project;cd scrum-project;git init
+  echo "# Proyecto Scrum" > README.md
+  git add README.md
+  git commit -m "Commit inicial en master"
+
+  # Creamos ramas de historias de usuario desde master
+  git branch feature/story-1
+  git branch feature/story-2
+
+  # Mostramos las ramas creadas
+  git branch
+  ```
+
+  ![](img/image-13.png)
+
+  **Pregunta**: 
+  - ¿Por qué es importante trabajar en ramas de funcionalidades separadas durante un sprint?
+
+    Para que las implementaciones sean independientes, y no dependan uno de otro, esto evita conflictos con los cambios de otros miembros del equipo.
+    También es importante para las pruebas de las funcionalidades que se desarrollan, si se tuviera las funcionalidades en un misma rama, hacer pruebas de estas y corregirlas si hay errores, seria mas trabajoso y poco claro, mientras que si tenemos ramas independientes para cada funcionalidad, el flujo de pruebas y correcciones es mas claro y fácil de realizar, otro punto son los rollback, imaginemos que de las dos funcionalidades, una de ellas tiene problemas que no se detectaron en la fase de pruebas y paso a producción, por lo que necesitamos sacar dichos cambios, si tuviéramos implementados las funcionalidades en una sola rama, el rollback se hace mas fácil de realizar por que tenemos todos los cambios mapeados en la rama correspondiente.
+
+- **Ejercicio 2**: Integración continua con git rebase
+
+  **Comandos utilizados**:
+
+  ```bash
+  # Simula cambios en la rama master
+  echo "Actualización en master" > updates.md
+  git add updates.md
+  git commit -m "Actualizar master con nuevas funcionalidades"
+
+  # Rebase de la rama feature/story-1 sobre master
+  git checkout feature/story-1
+  git log --graph --oneline --all
+  git rebase master
+  git log --graph --oneline --all
+  ```
+
+  ![](img/image-14.png)
+
+  **Pregunta**: 
+  - ¿Qué ventajas proporciona el rebase durante el desarrollo de un sprint en términos de integración continua?
+
+    Rebase mantiene un historial lineal y esto ayuda a la legibilidad de los commits a los integrantes del equipo de desarrollo, ademas mantiene actualizado las ramas de desarrollo integrando commits nuevos de la rama base, esto ayuda a reducir los conflictos que podrían presentarse por la sincronización de cambios y si los hubiera, ayuda a resolver estos de manera mas clara y eficiente.
+
+- **Ejercicio 3**: Integración selectiva con git cherry-pick
+
+  **Comandos utilizados**:
+
+  ```bash
+  # Agregamos cambios en feature/story-2
+  git checkout feature/story-2
+  echo "Funcionalidad lista" > feature2.md
+  git add feature2.md
+  git commit -m "Funcionalidad lista para revisión"
+
+  echo "Funcionalidad en progreso" > progress.md
+  git add progress.md
+  git commit -m "Funcionalidad aún en progreso"
+
+  # Ahora selecciona solo el commit que esté listo
+  git checkout master
+  git log --graph --oneline --all
+  git cherry-pick <hash_del_commit_de_feature-lista>
+  git log --graph --oneline --all
+  ```
+  
+  ![](img/image-15.png)
+
+  **Pregunta**: 
+  - ¿Cómo ayuda git cherry-pick a mostrar avances de forma selectiva en un sprint review?
+
+    Al permitirnos seleccionar commits específicos, cherry-pick ayuda a revisar los avances de estos cambios concluidos, para la entrega continua, con lo cual evitamos los cambios inconclusos o inestables, de esta manera realizamos entregas funcionalidades rápidas en un sprint para la review de estas.
+
+- **Ejercicio 4**: Revisión de conflictos y resolución
+
+  **Comandos utilizados**:
+
+  ```bash
+  git checkout feature/story-1
+  echo "Cambio en la misma línea" > conflicted-file.md
+  git add conflicted-file.md
+  git commit -m "Cambio en feature 1"
+
+  git checkout feature/story-2
+  echo "Cambio diferente en la misma línea" > conflicted-file.md
+  git add conflicted-file.md
+  git commit -m "Cambio en feature 2"
+  git log --graph --oneline --all
+
+  # Intentar hacer merge en master
+  git checkout master
+  git merge feature/story-1
+  git log --graph --oneline --all
+  git merge feature/story-2
+
+  # Conflicto a solucionar, mantener cambio de feature/story-1
+  nano conflicted-file.md
+  ```
+  ![](img/image-16.png)
+    
+  ![](img/image-17.png)
+
+  ![](img/image-18.png)
+
+  ![](img/image-19.png)
+
+  ![](img/image-20.png)
+
+  **Pregunta**: 
+  - ¿Cómo manejas los conflictos de fusión al final de un sprint? ¿Cómo puede el equipo mejorar la comunicación para evitar conflictos grandes?
+
+    Para ello es clave determinar un flujo de trabajo claro, para evitar los conflictos, por ejemplo, antes de realizar la fusión al final, realizar un rebase de la rama base, para tener todos los cambios que durante el tiempo de desarrollo, pudiera haber ingresado a la rama master, si hay conflictos en esta parte, es mas fácil y legible de resolverlos, luego de esto, recién proceder a fusionara, en caso saltemos este paso, al fusionar, tendremos el conflicto, pero sera mas complicado resolverlo, ya que necesitaremos la comunicación de los responsables de los cambios que genera conflicto y resolverlos en conjunto, ya que si no se resuelve correctamente, hay la posibilidad de quitar o agregar lineas de código, que podría ocasionar problemas. 
