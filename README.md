@@ -9,6 +9,10 @@ Actividades del curso:
 - [Actividad05](S_3/Actividad05.md)
 - [Actividad06](S_4/Actividad06.md)
 
+Practicas Dirigidas:
+
+- [Practica dirigida 02](S_4/PracticaDirigida2.md)
+
 Pruebas del curso:
 
 - [Prueba de entrada](S_3/Prueba_Entrada.md)
